@@ -210,7 +210,7 @@ alias leslint='function __leslint() {
 LS_COLORS=$LS_COLORS:'ow=1;34:' ; export LS_COLORS
 
 
-export TERM="xterm-256color"
+# export TERM="xterm-256color"
 
 parse_git_branch() {
      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
@@ -227,3 +227,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias config='/usr/bin/git --git-dir=/root/.cfg/ --work-tree=/root'
+alias tmux="TERM=screen-256color tmux"
