@@ -1,37 +1,75 @@
-#
-# Some shortcuts for different directory listings
- alias ls='ls -hF --color=tty'                 # classify files in colour
- alias dir='ls --color=auto --format=vertical'
- alias vdir='ls --color=auto --format=long'
- alias ll='ls -l'                              # long list
- alias la='ls -Al'                              # all but . and ..
- alias l='ls -CF'                              #
+# If you come from bash you might have to change your $PATH.
+export PATH=$HOME/bin:/usr/local/bin:/Users/ezablaza/Library/Python/3.9/bin:$PATH
 
-# Command alias
-alias python=python3.6
-alias python2=python2.7
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
 
-
-#eslint
-alias leslint='function __leslint() {
-	$(npm bin)/eslint $@;
-	};__leslint'
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="nanotech"
 
 
-LS_COLORS=$LS_COLORS:'ow=1;34:' ; export LS_COLORS
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# Bash
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=100000
+HISTFILESIZE=2000000
+
+# AWS 
+# Set profile
+set-aws-profile() {
+   export AWS_DEFAULT_PROFILE="$1"
+}
+
+# ECR Auth
+
+# SSH
+
+# Postgres
+export PGDATA='/usr/local/var/postgres'
+export PGHOST=localhost
+alias pg-start='pg_ctl -l $PGDATA/server.log start'
+alias pg-stop='pg_ctl stop -m fast'
+alias pg-status='pg_ctl status'
+alias pg-restart='pg_ctl reload'
+
+# Docker
+
+# Git
+# git clean
+alias git-clean='git clean -xfd -e tmp -e .env -e .vscode'
 
 
-# export TERM="xterm-256color"
+# delete branches with removed remote
+clean-local-branch() {
+   git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}');
+   do git branch -D $branch
+   done;
+}
 
 
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:~/.local/bin
-export SOOTPATH=~/Research/soot/nightly/sootclasses-trunk-jar-with-dependencies.jar
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+# Python
+alias python='python3'
+PYTHONDONTWRITEBYTECODE=1
+
 
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-alias config='/usr/bin/git --git-dir=/root/.cfg/ --work-tree=/root'
-alias tmux="TERM=screen-256color tmux"
