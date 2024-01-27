@@ -1,5 +1,5 @@
-# If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:/Users/ezablaza/Library/Python/3.9/bin:$PATH
+# If you come from bash or a different OS you might have to change your $PATH.
+export PATH=$HOME/bin:/usr/local/bin:/Users/ezablaza/Library/Python/3.9/bin:/Users/ezablaza/.local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -50,14 +50,13 @@ alias pg-status='pg_ctl status'
 alias pg-restart='pg_ctl reload'
 
 # Docker
+# delete excess images 
 
 # Git
-# git clean
 alias git-clean='git clean -xfd -e tmp -e .env -e .vscode'
 
-
 # delete branches with removed remote
-clean-local-branch() {
+clean-local-branches() {
    git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}');
    do git branch -D $branch
    done;
